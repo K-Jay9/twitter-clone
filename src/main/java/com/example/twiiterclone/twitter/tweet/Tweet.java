@@ -1,27 +1,49 @@
 package com.example.twiiterclone.twitter.tweet;
 
 
+import com.example.twiiterclone.twitter.Customer.Customer;
 import com.example.twiiterclone.twitter.comment.Comment;
+import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
+import static javax.persistence.GenerationType.*;
 
 @Entity
 public class Tweet {
 
     @Id
-    private UUID uuid;
-    private LocalDate time_posted;
+    @SequenceGenerator(
+            name = "tweet_sequence",
+            sequenceName = "tweet_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = SEQUENCE,
+            generator = "tweet_sequence"
+    )
+    @Column(
+            updatable = false
+    )
+    private Long tweet_id;
+    @Column(
+            nullable = false,
+            columnDefinition = "DATE DEFAULT CURRENT_DATE"
+
+    )
+    private String time_posted;
+
+    @Column(
+            columnDefinition = "TEXT"
+    )
     private String content;
     private int likes;
 
     // This should be a list of all the comments in the tweet
-    @OneToMany
-    private List<Comment> comment;
+
 
     private int shares;
     private int retweets;
@@ -34,7 +56,7 @@ public class Tweet {
     @Override
     public String toString() {
         return "Tweet{" +
-                "uuid=" + uuid +
+                "long=" + tweet_id +
                 ", time_posted=" + time_posted +
                 ", content='" + content + '\'' +
                 ", likes=" + likes +
@@ -46,30 +68,29 @@ public class Tweet {
     public Tweet() {
     }
 
-    public Tweet(UUID uuid, LocalDate time_posted, String content, int likes, List<Comment> comment, int shares, int retweets) {
-        this.uuid = uuid;
+    public Tweet(Long tweet_id, String time_posted, String content, int likes, int shares, int retweets) {
+        this.tweet_id = tweet_id;
         this.time_posted = time_posted;
         this.content = content;
         this.likes = likes;
-        this.comment = comment;
         this.shares = shares;
         this.retweets = retweets;
 
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public Long getLong() {
+        return tweet_id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setUuid(Long tweet_id) {
+        this.tweet_id = tweet_id;
     }
 
-    public LocalDate getTime_posted() {
+    public String getTime_posted() {
         return time_posted;
     }
 
-    public void setTime_posted(LocalDate time_posted) {
+    public void setTime_posted(String time_posted) {
         this.time_posted = time_posted;
     }
 
@@ -89,13 +110,6 @@ public class Tweet {
         this.likes = likes;
     }
 
-    public List<Comment> getComments() {
-        return comment;
-    }
-
-    public void setComments(List<Comment> comment) {
-        this.comment = comment;
-    }
 
     public int getShares() {
         return shares;
