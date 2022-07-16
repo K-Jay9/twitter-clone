@@ -2,23 +2,36 @@ package com.example.twiiterclone.twitter.Customer;
 
 import com.example.twiiterclone.twitter.tweet.Tweet;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
+
+import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 public class Customer {
 
 
     @Id
+    @SequenceGenerator(
+            name = "comment_sequence",
+            sequenceName = "comment_sequence"
+    )
+    @GeneratedValue(
+            strategy = SEQUENCE,
+            generator = "comment_sequence"
+    )
+
     private String Username;
+    @Column(
+            columnDefinition = "TEXT",
+            unique = true
+    )
     private String Email;
     private String Name;
 
     // Should be the object Tweet instead of String type
-    @OneToMany
-    private List<Tweet> tweets;
+
+    private String tweets;
     private String Location;
     private int followerCount;
     private int followingCount;
@@ -33,7 +46,7 @@ public class Customer {
     }
 
     // Constructor with all the class attributes
-    public Customer(String username, String email, String name, List<Tweet> tweets, String location, int followerCount, int followingCount, String followers, String following) {
+    public Customer(String username, String email, String name, String tweets, String location, int followerCount, int followingCount, String followers, String following) {
         Username = username;
         Email = email;
         Name = name;
@@ -85,11 +98,11 @@ public class Customer {
         Name = name;
     }
 
-    public List<Tweet> getTweets() {
+    public String getTweets() {
         return tweets;
     }
 
-    public void setTweets(List<Tweet> tweets) {
+    public void setTweets(String tweets) {
         this.tweets = tweets;
     }
 

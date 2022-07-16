@@ -1,18 +1,33 @@
 package com.example.twiiterclone.twitter.comment;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
+
+import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 public class Comment {
 
     @Id
-    private UUID uuid;
+    @SequenceGenerator(
+            name = "comment_sequence",
+            sequenceName = "comment_sequence"
+    )
+    @GeneratedValue(
+            strategy = SEQUENCE,
+            generator = "comment_sequence"
+    )
+    @Column(
+            updatable = false
+    )
+    private Long comment_id;
     private int likes;
     private int shares;
     private int retweets;
+    @Column(
+            columnDefinition = "TEXT"
+    )
     private String content;
     private int commentCount;
 
@@ -25,7 +40,7 @@ public class Comment {
     @Override
     public String toString() {
         return "Comment{" +
-                "uuid=" + uuid +
+                "long=" + comment_id +
                 ", likes=" + likes +
                 ", shares=" + shares +
                 ", retweets=" + retweets +
@@ -35,8 +50,8 @@ public class Comment {
                 '}';
     }
 
-    public Comment(UUID uuid, int likes, int shares, int retweets, String content, int commentCount, String comment) {
-        this.uuid = uuid;
+    public Comment(Long comment_id, int likes, int shares, int retweets, String content, int commentCount, String comment) {
+        this.comment_id = comment_id;
         this.likes = likes;
         this.shares = shares;
         this.retweets = retweets;
@@ -45,12 +60,12 @@ public class Comment {
         this.comment = comment;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public Long getUuid() {
+        return comment_id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setUuid(Long comment_id) {
+        this.comment_id = comment_id;
     }
 
     public int getLikes() {
