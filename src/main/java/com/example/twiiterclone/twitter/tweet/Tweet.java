@@ -1,9 +1,13 @@
 package com.example.twiiterclone.twitter.tweet;
 
 
+import com.example.twiiterclone.twitter.comment.Comment;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,13 +20,14 @@ public class Tweet {
     private int likes;
 
     // This should be a list of all the comments in the tweet
-    private int comments;
+    @OneToMany
+    private List<Comment> comment;
 
     private int shares;
     private int retweets;
 
     // This should be a link of the images uploaded to the tweet
-    private String images;
+//    private String images;
 
 
     // toString to print the object as a string during testing and debuging
@@ -33,25 +38,23 @@ public class Tweet {
                 ", time_posted=" + time_posted +
                 ", content='" + content + '\'' +
                 ", likes=" + likes +
-                ", comments=" + comments +
                 ", shares=" + shares +
-                ", retweets=" + retweets +
-                ", images='" + images + '\'' +
+                ", retweets=" + retweets + '\'' +
                 '}';
     }
 
     public Tweet() {
     }
 
-    public Tweet(UUID uuid, LocalDate time_posted, String content, int likes, int comments, int shares, int retweets, String images) {
+    public Tweet(UUID uuid, LocalDate time_posted, String content, int likes, List<Comment> comment, int shares, int retweets) {
         this.uuid = uuid;
         this.time_posted = time_posted;
         this.content = content;
         this.likes = likes;
-        this.comments = comments;
+        this.comment = comment;
         this.shares = shares;
         this.retweets = retweets;
-        this.images = images;
+
     }
 
     public UUID getUuid() {
@@ -86,12 +89,12 @@ public class Tweet {
         this.likes = likes;
     }
 
-    public int getComments() {
-        return comments;
+    public List<Comment> getComments() {
+        return comment;
     }
 
-    public void setComments(int comments) {
-        this.comments = comments;
+    public void setComments(List<Comment> comment) {
+        this.comment = comment;
     }
 
     public int getShares() {
@@ -110,11 +113,4 @@ public class Tweet {
         this.retweets = retweets;
     }
 
-    public String getImages() {
-        return images;
-    }
-
-    public void setImages(String images) {
-        this.images = images;
-    }
 }

@@ -1,16 +1,16 @@
-package com.example.twiiterclone.twitter.User;
+package com.example.twiiterclone.twitter.Customer;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserController {
+public class CustomerController {
 
 
-    private final UserRepository repository;
+    private final CustomerRepository repository;
 
-    public UserController(UserRepository repository) {
+    public CustomerController(CustomerRepository repository) {
         this.repository = repository;
     }
 

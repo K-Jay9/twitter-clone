@@ -1,12 +1,14 @@
-package com.example.twiiterclone.twitter.User;
+package com.example.twiiterclone.twitter.Customer;
 
 import com.example.twiiterclone.twitter.tweet.Tweet;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
-public class User {
+public class Customer {
 
 
     @Id
@@ -15,7 +17,8 @@ public class User {
     private String Name;
 
     // Should be the object Tweet instead of String type
-    private String tweets;
+    @OneToMany
+    private List<Tweet> tweets;
     private String Location;
     private int followerCount;
     private int followingCount;
@@ -26,11 +29,11 @@ public class User {
 
 
     // An empty constructor
-    public User() {
+    public Customer() {
     }
 
     // Constructor with all the class attributes
-    public User(String username, String email, String name, String tweets, String location, int followerCount, int followingCount, String followers, String following) {
+    public Customer(String username, String email, String name, List<Tweet> tweets, String location, int followerCount, int followingCount, String followers, String following) {
         Username = username;
         Email = email;
         Name = name;
@@ -45,7 +48,7 @@ public class User {
     // A toString method to print the object as a string where required
     @Override
     public String toString() {
-        return "User{" +
+        return "Customer{" +
                 "Username='" + Username + '\'' +
                 ", Email='" + Email + '\'' +
                 ", Name='" + Name + '\'' +
@@ -82,11 +85,11 @@ public class User {
         Name = name;
     }
 
-    public String getTweets() {
+    public List<Tweet> getTweets() {
         return tweets;
     }
 
-    public void setTweets(String tweets) {
+    public void setTweets(List<Tweet> tweets) {
         this.tweets = tweets;
     }
 
