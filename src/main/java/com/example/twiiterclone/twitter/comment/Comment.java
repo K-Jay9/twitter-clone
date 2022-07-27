@@ -31,8 +31,9 @@ public class Comment {
     private String content;
     private int commentCount;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     // should be a list of links under this comment
-    private String comment;
+    private Comment comment;
 
     public Comment() {
     }
@@ -50,7 +51,7 @@ public class Comment {
                 '}';
     }
 
-    public Comment(Long comment_id, int likes, int shares, int retweets, String content, int commentCount, String comment) {
+    public Comment(Long comment_id, int likes, int shares, int retweets, String content, int commentCount, Comment comment) {
         this.comment_id = comment_id;
         this.likes = likes;
         this.shares = shares;
@@ -108,11 +109,11 @@ public class Comment {
         this.commentCount = commentCount;
     }
 
-    public String getComment() {
+    public Comment getComment() {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public void setComment(Comment comment) {
         this.comment = comment;
     }
 }
