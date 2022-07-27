@@ -1,5 +1,6 @@
 package com.example.twiiterclone.twitter.Customer;
 
+import com.example.twiiterclone.twitter.comment.Comment;
 import com.example.twiiterclone.twitter.tweet.Tweet;
 
 import javax.persistence.*;
@@ -31,7 +32,8 @@ public class Customer {
 
     // Should be the object Tweet instead of String type
 
-    private String tweets;
+    @ManyToOne
+    private Tweet tweets;
     private String Location;
     private int followerCount;
     private int followingCount;
@@ -40,13 +42,16 @@ public class Customer {
     private String followers;
     private String following;
 
+    @ManyToOne
+    private Comment comments;
+
 
     // An empty constructor
     public Customer() {
     }
 
     // Constructor with all the class attributes
-    public Customer(String username, String email, String name, String tweets, String location, int followerCount, int followingCount, String followers, String following) {
+    public Customer(String username, Comment comments,String email, String name, Tweet tweets, String location, int followerCount, int followingCount, String followers, String following) {
         Username = username;
         Email = email;
         Name = name;
@@ -56,6 +61,7 @@ public class Customer {
         this.followingCount = followingCount;
         this.followers = followers;
         this.following = following;
+        this.comments = comments;
     }
 
     // A toString method to print the object as a string where required
@@ -70,6 +76,7 @@ public class Customer {
                 ", followerCount=" + followerCount +
                 ", followingCount=" + followingCount +
                 ", followers='" + followers + '\'' +
+                ", comments='" + comments+'\'' +
                 ", following='" + following + '\'' +
                 '}';
     }
@@ -98,11 +105,11 @@ public class Customer {
         Name = name;
     }
 
-    public String getTweets() {
+    public Tweet getTweets() {
         return tweets;
     }
 
-    public void setTweets(String tweets) {
+    public void setTweets(Tweet tweets) {
         this.tweets = tweets;
     }
 
@@ -144,5 +151,13 @@ public class Customer {
 
     public void setFollowing(String following) {
         this.following = following;
+    }
+
+    public Comment getComments() {
+        return comments;
+    }
+
+    public void setComments(Comment comments) {
+        this.comments = comments;
     }
 }
